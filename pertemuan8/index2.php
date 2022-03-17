@@ -1,0 +1,62 @@
+<?php 
+
+// melakukan koneksi ke database
+$conn = mysqli_connect("localhost", "root", "", "dbwri_dasar");
+
+// ambil data dari tabel wri
+$result = mysqli_query($conn, "SELECT * FROM anggota");
+
+if (!$result) {
+    echo mysqli_error($conn);
+}
+
+// ambil data (fetch) dari object result
+// mysqli_fetch_row() // mengembalikan array numerik
+// mysqli_fetch_assoc() // mengembalikan array associative
+// mysqli_fetch_array() // mengembalikan keduanya
+// mysqli_fetch_object() // mengembalikan objek
+
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Admin</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+</head>
+
+<body>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">id</th>
+                <th scope="col">Nama</th>
+                <th scope="col">No Telepon</th>
+                <th scope="col">Angkatan</th>
+                <th scope="col">Miniclass</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+          <?php while ($row = mysqli_fetch_assoc($result)) : ?>
+            <tr>
+                <th scope="row"><?= $row["id_anggota"]; ?></th>
+                <td><?= $row["nama_anggota"]; ?></td>
+                <td><?= $row["no_telpon"]; ?></td>
+                <td><?= $row["angkatan"]; ?></td>
+                <td><?= $row["miniclass"]; ?></td>
+                <td> <button class="btn btn-primary">Edit</button> <button class="btn btn-danger" onclick="return confirm('Yakin ingin menghapus data?')">Delete</button> </td>
+            </tr>
+            <?php endwhile; ?>
+        </tbody>
+    </table>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+</body>
+
+</html>
